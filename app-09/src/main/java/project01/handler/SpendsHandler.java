@@ -5,14 +5,14 @@ import util.Prompt;
 public class SpendsHandler {
 
   static final int MAX_SIZE = 100;
-  static int userId = 1;
-  static int length = 0;
   static int[] no = new int[MAX_SIZE];
   static String[] spend = new String[MAX_SIZE];
   static String[] price = new String[MAX_SIZE];
   static char[] dailyNecessity = new char[MAX_SIZE];
   static String[] YesOrNo = new String[MAX_SIZE];
-
+  static int userId = 1;
+  static int length = 0;
+  
   static final char Yes = 'Y';
   static final char No = 'N';
 
@@ -24,7 +24,10 @@ public class SpendsHandler {
 
     loop: while (true) {
 
-      String menuNo = Prompt.inputString("생필품 여부:\n" + "  1. Yes\n" + "  2. No\n" + "> ");
+      String menuNo = Prompt.inputString("생필품 여부:\n" + 
+      "  1. Yes\n" + 
+      "  2. No\n" + 
+      "> ");
 
       switch (menuNo) {
         case "1":
