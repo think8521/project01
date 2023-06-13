@@ -1,17 +1,14 @@
 package project01.handler;
 
 import util.Prompt;
+import project01.vo.Spend;
 
 public class SpendsHandler {
 
   static final int MAX_SIZE = 100;
+  static Spend[] spends = new Spend[MAX_SIZE];
   static int userId = 1;
   static int length = 0;
-  static int[] no = new int[MAX_SIZE];
-  static String[] spend = new String[MAX_SIZE];
-  static String[] price = new String[MAX_SIZE];
-  static char[] dailyNecessity = new char[MAX_SIZE];
-  static String[] YesOrNo = new String[MAX_SIZE];
 
   static final char Yes = 'Y';
   static final char No = 'N';
@@ -22,12 +19,13 @@ public class SpendsHandler {
       return;
     }
 
-    spend[length] = Prompt.inputString("지출명? ");
-    price[length] = Prompt.inputString("금액? ");
-    dailyNecessity[length] = inputDaily((char)0);
+    Spend s = new Spend();
+    s.spend = Prompt.inputString("지출명? ");
+    s.price = Prompt.inputString("금액? ");
+    s.dailyNecessity = inputDaily((char)0);
+    s.no = userId++;
     
-    no[length] = userId++;
-    length++;
+    spends[length++] = s;
   }
 
   public static void printSpends() {
@@ -36,19 +34,21 @@ public class SpendsHandler {
     System.out.println("--------------------------------");
 
     for (int i = 0; i < length; i++) {
+      Spend s = spends[i];
       System.out.printf("%d, %s, %s원, %s\n", 
-        no[i], spend[i], price[i], 
-        toDailyString(dailyNecessity[i]));
+        s.no, s.spend, s.price, 
+        toDailyString(s.dailyNecessity));
     }
   }
     
   public static void viewMember() {
-    String memberNo = Prompt.inputString("번호? ");
+    String spendNo = Prompt.inputString("번호? ");
     for (int i = 0; i < length; i++) {
-      if (no[i] == Integer.parseInt(memberNo)) {
-        System.out.printf("지출명: %s\n", spend[i]);
-        System.out.printf("금액: %s\n", email[i]);
-        System.out.printf("생필품 여부: %s\n", toDailyString(dailyNecessity[i]));
+      Spend s = spends[i];
+      if (s.no == Integer.parseInt(spendNo)) {
+        System.out.printf("지출명: %s\n", s.spend);
+        System.out.printf("금액: %s\n", s.email);
+        System.out.printf("생필품 여부: %s\n", toDailyString(s.dailyNecessity));
         return;
       }
     }
@@ -64,13 +64,13 @@ public class SpendsHandler {
     // 입력 받은 번호를 가지고 배열에서 해당 회원을 찾아야 한다.
     for (int i = 0; i < length; i++) {
       Spend s = spends[i];
-      if (no[i] == Integer.parseInt(spendNo)) {
+      if (s.no == Integer.parseInt(spendNo)) {
         // i 번째 항목에 저장된 회원 정보 출력
-        System.out.printf("지출명(%s)? ", spend[i]);
-        spend[i] = Prompt.inputString("");
-        System.out.printf("금액(%s)? ", price[i]);
-        price[i] = Prompt.inputString("");
-        dailyNecessity[i] = inputDaily(dailyNecessity[i]);
+        System.out.printf("지출명(%s)? ", s.spend);
+        s.spend = Prompt.inputString("");
+        System.out.printf("금액(%s)? ", s.price);
+        s.price = Prompt.inputString("");
+        s.dailyNecessity = inputDaily(s.dailyNecessity);
         return;
       }
     }
@@ -112,23 +112,16 @@ public class SpendsHandler {
     }
 
     for (int i = deletedIndex; i < length - 1; i++) {
-      no[i] = no[i + 1];
-      spend[i] = spend[i + 1];
-      price[i] = price[i + 1];
-      dailyNecessity[i] = dailyNecessity[i + 1];
+      spends[i] = spends[i + 1];
     }
 
-    no[length - 1] = 0;
-    spend[length - 1] = null;
-    price[length - 1] = null;
-    dailyNecessity[length - 1] = (char) 0;
-
-    length--;
+    spends[--length] = null;
   }
 
   private static int indexOf(int spendNo) {
     for (int i = 0; i < length; i++) {
-      if (no[i] == spendNo) {
+      Spend s = spends[i];
+      if (s.no == spendNo) {
         return i;
       }
     }
