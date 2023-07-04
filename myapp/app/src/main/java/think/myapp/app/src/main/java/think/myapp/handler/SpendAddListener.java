@@ -13,6 +13,7 @@ public class SpendAddListener extends AbstractSpendListener {
   @Override
   public void service(BreadcrumbPrompt prompt) {
     Spend s = new Spend();
+    s.setNo(Spend.userId++);
     s.setSpend(prompt.inputString("지출명? "));
     s.setPrice(prompt.inputString("금액? "));
     s.setDaily(inputDaily((char) 0, prompt));

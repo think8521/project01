@@ -8,7 +8,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
-import com.google.common.reflect.TypeToken;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import think.myapp.handler.BoardAddListener;
 import think.myapp.handler.BoardDeleteListener;
 import think.myapp.handler.BoardDetailListener;
@@ -49,7 +51,7 @@ public class App {
 
   static void printTitle() {
     System.out.println("지출 내역 관리 시스템");
-    System.out.println("----------------------------------");
+    System.out.println("🪙 🪙 🪙 🪙 🪙 🪙 🪙 🪙 🪙\n");
   }
 
   public void execute() {
@@ -75,7 +77,7 @@ public class App {
   }
 
   private void prepareMenu() {
-    MenuGroup spendMenu = new MenuGroup("회원");
+    MenuGroup spendMenu = new MenuGroup("지출내역");
     spendMenu.add(new Menu("등록", new SpendAddListener(spendList)));
     spendMenu.add(new Menu("목록", new SpendListListener(spendList)));
     spendMenu.add(new Menu("조회", new SpendDetailListener(spendList)));
@@ -111,12 +113,14 @@ public class App {
       FileReader in0 = new FileReader(filename);
       BufferedReader in = new BufferedReader(in0); // <== Decorator 역할을 수행!
 
+
       StringBuilder strBuilder = new StringBuilder();
       String line = null;
 
       while ((line = in.readLine()) != null) {
         strBuilder.append(line);
       }
+
 
       in.close();
 
@@ -131,7 +135,7 @@ public class App {
       for (Class<?> info : interfaces) {
         if (info == AutoIncrement.class) {
           AutoIncrement autoIncrement = (AutoIncrement) list.get(list.size() - 1);
-          autoIncrement.updatekety();
+          autoIncrement.updatekey();
           break;
         }
       }
@@ -144,7 +148,7 @@ public class App {
   private void saveJson(String filename, List<?> list) {
     try {
       FileWriter out0 = new FileWriter(filename);
-      BufferedWriter out = new BufferedWriter(out0); // <== Decorator(장식품) 역할 수행!
+      BufferedWriter out = new BufferedWriter(out0);
 
       Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").setPrettyPrinting().create();
       out.write(gson.toJson(list));

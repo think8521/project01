@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class Spend implements Serializable, CsvObject, AutoIncrement {
   private static final long serialVersionUID = 1L;
 
-  private static int userId = 1;
+  public static int userId = 1;
 
   public static final char Yes = 'Y';
   public static final char No = 'N';
