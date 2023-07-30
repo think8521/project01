@@ -1,24 +1,27 @@
 package think.myapp.handler;
 
-import java.util.List;
+import think.myapp.dao.BoardDao;
 import think.myapp.vo.Board;
+import think.util.ActionListener;
 import think.util.BreadcrumbPrompt;
 
-public class BoardAddListener extends AbstractBoardListener {
+public class BoardAddListener implements ActionListener {
 
-  public BoardAddListener(List<Board> list) {
-    super(list);
+  BoardDao boardDao;
+
+  public BoardAddListener(BoardDao boardDao) {
+    this.boardDao = boardDao;
   }
 
   @Override
   public void service(BreadcrumbPrompt prompt) {
     Board board = new Board();
-    board.setNo(Board.boardNo++);
     board.setTitle(prompt.inputString("제목? "));
     board.setContent(prompt.inputString("내용? "));
     board.setWriter(prompt.inputString("작성자? "));
     board.setPassword(prompt.inputString("암호? "));
-    this.list.add(board);
+
+    boardDao.insert(board);
   }
 }
 
