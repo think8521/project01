@@ -23,13 +23,13 @@ public class MySQLSpendDao implements SpendDao {
 
   @Override
   public List<Spend> findAll(char daily) {
-    SqlSession sqlSession = sqlSessionFactory.openSession(true);
+    SqlSession sqlSession = sqlSessionFactory.openSession(false);
     return sqlSession.selectList("think.myapp.dao.SpendDao.findAll", daily);
   }
 
   @Override
   public Spend findBy(char daily, int no) {
-    SqlSession sqlSession = sqlSessionFactory.openSession(true);
+    SqlSession sqlSession = sqlSessionFactory.openSession(false);
 
     Map<String, Object> paramMap = new HashMap<>();
     paramMap.put("dailyChar", daily);

@@ -31,6 +31,7 @@
       m.name,
       s.spend,
       s.price,
+      s.daily,
       s.created_date,
       m.member_no
     from
@@ -49,6 +50,7 @@
       m.id,
       s.spend,
       s.price,
+      s.daily,
       s.created_date,
       m.member_no
     from
@@ -61,10 +63,10 @@
   <update id="update" parameterType="spend">
     update think_spend set
       spend=#{spend},
-      price=#{price}
-    where 
+      price=#{price},
       daily=#{daily}
-      and spend_no=#{no}
+    where 
+      spend_no=#{no}
       and who=#{who.no}
   </update>
   

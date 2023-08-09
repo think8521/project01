@@ -1,6 +1,7 @@
 plugins {
-    id 'application'
-    id 'eclipse'
+    id 'java'
+    id 'eclipse-wtp'
+    id 'war'
 }
 
 repositories {
@@ -14,18 +15,25 @@ dependencies {
         // MySQL JDBC Driver
     implementation 'mysql:mysql-connector-java:8.0.33'
 
+    // Google JSON 라이브러리
+    //implementation 'com.google.code.gson:gson:2.10.1'
+  
+    // jackson-databind JSON 라이브러리
+    //implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
+    
         // Mybatis 라이브러리
     implementation 'org.mybatis:mybatis:3.5.13'
+    
+        // Netty 프레임워크
+    //implementation 'io.netty:netty-all:4.1.96.Final'
+    
+        // Servlet API
+    providedCompile 'javax.servlet:javax.servlet-api:4.0.1'
     
     testImplementation 'org.junit.jupiter:junit-jupiter:5.9.1'
 
     implementation 'com.google.guava:guava:31.1-jre'
     
-    // Google JSON 라이브러리
-    implementation 'com.google.code.gson:gson:2.10.1'
-  
-    // jackson-databind JSON 라이브러리
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
 }
 
 java {
@@ -34,9 +42,6 @@ java {
     }
 }
 
-application {
-    mainClass = 'think.myapp.ServerApp'
-}
 
 tasks.named('test') {
     useJUnitPlatform()
@@ -65,4 +70,19 @@ eclipse {
       targetCompatibility = 17
       javaRuntimeName = "JavaSE-17"
     }
+    
+    wtp {
+        facet {
+            facet name: 'jst.java', version: '17'
+            //facet name: 'jst.web', version: '4.0'
+        }
+        component {
+            contextPath = '/'
+            //deployName = 'web'
+        }
+    }
+}
+
+war {
+    archiveBaseName = "project01"
 }
