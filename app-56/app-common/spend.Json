@@ -1,0 +1,20 @@
+[
+  {
+    "no": 1,
+    "spend": "비누",
+    "price": "1000",
+    "dailyNecessity": "Y"
+  },
+  {
+    "no": 2,
+    "spend": "아아",
+    "price": "1400",
+    "dailyNecessity": "N"
+  },
+  {
+    "no": 3,
+    "spend": "따아",
+    "price": "천사백원",
+    "dailyNecessity": "N"
+  }
+]

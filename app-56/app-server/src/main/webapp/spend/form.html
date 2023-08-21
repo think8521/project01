@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='UTF-8'>
+<title>지출내역 관리 시스템 - 지출내역 추가</title>
+</head>
+<body>
+<h1>지출내역</h1>
+<form action='/spend/add' method="post">
+<table border="1">
+<tr>
+  <th>지출명</th> <td style="width:200px;"><input type='text' name='spend'></td>
+</tr>
+<tr>
+  <th>가격</th> <td><input type='number' name='price'></td>
+</tr>
+<tr>
+    <th>생필품</th> 
+  <td>
+    <select name="daily">
+      <option value="Y">생필품</option>
+      <option value="N">사치품</option>
+    </select>  
+  </td>
+</tr>
+</table>
+<button>등록</button>
+</form>
+</body>
+</html>
+
+
+
+
+
+

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="think.myapp.dao.SpendDao">
+
+  <!-- 결과 레코드의 컬럼 값을 자바 객체에 어떻게 담을 것인지 설정한다. -->
+  <resultMap type="spend" id="spendMap">
+    <id     column="spend_no"       property="no"/>
+    <result column="spend"          property="spend"/>
+    <result column="price"        property="price"/>
+    <result column="created_date"   property="createdDate"/>
+    <result column="daily"       property="daily"/>
+    
+    <association property="who" javaType="member">
+      <id     column="member_no"    property="no"/>
+      <result column="name"         property="name"/>
+      <result column="id"         property="id"/>
+    </association>
+    
+  </resultMap>
+
+  <insert id="insert" parameterType="spend">
+    insert into think_spend(spend,price,who,daily)
+    values(#{spend},#{price},#{who.no},#{daily})
+  </insert>
+  
+  <select id="findAll" parameterType="char" resultMap="spendMap">
+    select
+      s.spend_no,      
+      m.name,
+      s.spend,
+      s.price,
+      s.daily,
+      s.created_date,
+      m.member_no
+    from
+      think_spend s inner join think_member m on s.who=m.member_no
+    where
+      daily=#{dailyChar}
+      and s.who=m.member_no
+    order by
+      spend_no desc
+  </select>
+  
+  <select id="findBy" parameterType="map" resultMap="spendMap">
+    select
+      s.spend_no,
+      m.name,
+      m.id,
+      s.spend,
+      s.price,
+      s.daily,
+      s.created_date,
+      m.member_no
+    from
+      think_spend s inner join think_member m on s.who=m.member_no
+    where
+      daily=#{dailyChar}
+      and spend_no=#{spendNo}
+  </select>
+  
+  <update id="update" parameterType="spend">
+    update think_spend set
+      spend=#{spend},
+      price=#{price},
+      daily=#{daily}
+    where 
+      spend_no=#{no}
+      and who=#{who.no}
+  </update>
+  
+  <update id="updateCount" parameterType="spend">
+    update think_spend set
+      view_count=#{viewCount}
+    where
+      daily=#{daily}
+      and spend_no=#{no}
+  </update>
+  
+  <delete id="delete" parameterType="spend">
+    delete from think_spend
+    where 
+      daily=#{daily}
+      and spend_no=#{no}
+      and who=#{who.no}
+  </delete>
+</mapper>
+
+
+
+
+
